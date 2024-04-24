@@ -16,6 +16,12 @@ class EncryptionStrategy:
     
     
 class DESEncryption(EncryptionStrategy):
+    def generate_random_key(self):
+        return os.urandom(8)
+    
+    def generate_random_iv(self):
+        return get_random_bytes(8)
+    
     def encrypt(self, text, key, iv):
         cipher = DES.new(key, DES.MODE_CBC, iv)
         ciphertext = cipher.encrypt(pad(text, DES.block_size))
@@ -29,6 +35,12 @@ class DESEncryption(EncryptionStrategy):
 
 # Implement encryption algorithms
 class AESEncryption(EncryptionStrategy):  
+    def generate_key(self, size):
+        return os.urandom(size)
+    
+    def generate_iv(self):
+        return os.urandom(16)
+    
     def pad(self, plaintext):
         padder = padding.PKCS7(128).padder()
         padded_data = padder.update(plaintext)
@@ -76,34 +88,34 @@ if __name__ == "__main__":
     plainText = "Hello, world!".encode()
     print("\n\n",plainText,end="\n\n\n")
     
-    iv = os.urandom(16)
     aes_strategy = AESEncryption()
+    iv = aes_strategy.generate_iv()
 
     # Example usage of AES128
-    key128 = os.urandom(16)
+    key128 = aes_strategy.generate_key(16)
     encryptor = Encryptor(aes_strategy)
     cipher_text_AES128 = encryptor.encrypt_text(plainText, key128, iv)
     deciphered_text_AES128 = encryptor.decrypt_text(cipher_text_AES128, key128, iv)
     print("\tAES128\nCipherText: ",cipher_text_AES128,"\nDecipheredText: ",deciphered_text_AES128, end="\n\n")
     
     # Example usage of AES192
-    key192 = os.urandom(24)
+    key192 = aes_strategy.generate_key(24)
     encryptor = Encryptor(aes_strategy)
     cipher_text_AES192 = encryptor.encrypt_text(plainText, key192, iv)
     deciphered_text_AES192 = encryptor.decrypt_text(cipher_text_AES192, key192, iv)
     print("\tAES192\nCipherText: ",cipher_text_AES192,"\nDecipheredText: ",deciphered_text_AES192, end="\n\n")
     
     # Example usage of AES256
-    key256 = os.urandom(32)
+    key256 = aes_strategy.generate_key(32)
     encryptor = Encryptor(aes_strategy)
     cipher_text_AES256 = encryptor.encrypt_text(plainText, key256, iv)
     deciphered_text_AES256 = encryptor.decrypt_text(cipher_text_AES256, key256, iv)
     print("\tAES256\nCipherText: ",cipher_text_AES256,"\nDecipheredText: ",deciphered_text_AES256, end="\n\n")
 
     # Example usage of DES
-    key64 = os.urandom(8)
-    iv_8 = get_random_bytes(8)
     des_strategy = DESEncryption()
+    key64 = des_strategy.generate_random_key()
+    iv_8 = des_strategy.generate_random_iv()
     encryptor = Encryptor(des_strategy)
     cipher_text_DES = encryptor.encrypt_text(plainText, key64, iv_8)
     deciphered_text_DES = encryptor.decrypt_text(cipher_text_DES, key64, iv_8)

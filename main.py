@@ -27,8 +27,3 @@ class EncryptionWorker(threading.Thread):
 # worker.join()
 
     
-    
-    
-#TODO: 
-#      2. SHA Hashing function
-#      3. RSA public key crypto system
