@@ -16,10 +16,10 @@ class EncryptionStrategy:
     
     
 class DESEncryption(EncryptionStrategy):
-    def generate_random_key(self):
+    def generate_key(self):
         return os.urandom(8)
     
-    def generate_random_iv(self):
+    def generate_iv(self):
         return get_random_bytes(8)
     
     def encrypt(self, text, key, iv):
@@ -114,8 +114,8 @@ if __name__ == "__main__":
 
     # Example usage of DES
     des_strategy = DESEncryption()
-    key64 = des_strategy.generate_random_key()
-    iv_8 = des_strategy.generate_random_iv()
+    key64 = des_strategy.generate_key()
+    iv_8 = des_strategy.generate_iv()
     encryptor = Encryptor(des_strategy)
     cipher_text_DES = encryptor.encrypt_text(plainText, key64, iv_8)
     deciphered_text_DES = encryptor.decrypt_text(cipher_text_DES, key64, iv_8)
