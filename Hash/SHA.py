@@ -5,7 +5,7 @@ def hash(text):
     # Choose a hash algorithm (SHA-256 in this example)
     algorithm = hashes.SHA256()
     hasher = hashes.Hash(algorithm)
-    hasher.update(text)
+    hasher.update(text.encode('utf-8'))
     # Finalize the hash to obtain the digest (hash value) of the data
     return hasher.finalize()
 
