@@ -8,7 +8,7 @@ class KeyManager:
         self.key_dir = "./keys"
         if not os.path.exists(self.key_dir):
             os.mkdir(self.key_dir)
-    
+     
     def get_key_pair(self, email):
         user_key_dir = self.key_dir+ "/"+ email
         # check if the email already has key pair then return them
