@@ -37,7 +37,7 @@ class KeyManager:
                     format=serialization.PublicFormat.SubjectPublicKeyInfo
                 )
                 f.write(public_key)
-        return public_key.decode(), private_key.decode()
+        return public_key, private_key
     
     def pem_to_rsa_public_key(self, public_pem):
         # Load the PEM-encoded public key
